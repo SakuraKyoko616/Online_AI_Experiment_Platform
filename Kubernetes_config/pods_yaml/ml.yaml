@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ml
+  namespace: ai
+  labels:
+    name: ml
+spec:
+  containers:
+  - name: ml
+    image: jupyter/tensorflow-notebook:ubuntu-20.04
+    ports:
+      - containerPort: 8888
+        hostPort: 10000
+        protocol: TCP
+    volumeMounts:
+      - name: nfs-pvc
+        mountPath: /home/jovyan/work
+  volumes: 
+    - name: nfs-pvc
+      nfs:
+          path: /home/kyokoz/data/Supervised Learning:Logistic Regression Classifier
+          server: 192.168.100.100
